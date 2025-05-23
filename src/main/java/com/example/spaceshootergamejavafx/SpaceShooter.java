@@ -36,10 +36,10 @@ import javafx.util.Duration;
 public class SpaceShooter extends Application {
 
   /** Width of the game window. */
-  public static final int WIDTH = 300;
+  public static final int WIDTH = 500;
 
   /** Height of the game window. */
-  public static final int HEIGHT = 600;
+  public static final int HEIGHT = 900;
 
   /** Number of lives the player starts with. */
   public static int numLives = 3;
@@ -114,6 +114,9 @@ public class SpaceShooter extends Application {
   /** Flag to indicate if AI mode is active. */
   private boolean aiMode = false;
   private AIController aiController;
+
+  /** Transition for power up reset. */
+  private PauseTransition powerUpResetTransition = null;
 
   /** Main method to launch the game. */
   public static void main(String[] args) { launch(args); }
@@ -289,8 +292,7 @@ public class SpaceShooter extends Application {
             score += 10;
           }
           scoreLabel.setText("Score: " + score);
-          BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" +
-                                  MAX_BOSES);
+          BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" + MAX_BOSES);
 
           if (score % 100 == 0) {
             Enemy.SPEED += 0.8;
@@ -303,10 +305,22 @@ public class SpaceShooter extends Application {
         if (bullet.getBounds().intersects(powerUp.getBounds())) {
           bullet.setDead(true);
           powerUp.setDead(true);
+          playPowerupSound();
+
           score += 50;
           scoreLabel.setText("Score: " + score);
-          player.setBulletLevel(player.getBulletLevel() +
-                                1); // <-- Thêm dòng này
+          player.setBulletLevel(player.getBulletLevel() + 1);
+
+          if (powerUpResetTransition != null) {
+            powerUpResetTransition.stop();
+          }
+          // Duration of the Bullet Level > 1
+          powerUpResetTransition = new PauseTransition(Duration.seconds(10));
+          powerUpResetTransition.setOnFinished(event -> {
+            player.setBulletLevel(1);
+            powerUpResetTransition = null;
+          });
+          powerUpResetTransition.play();
         }
       }
     }
@@ -318,7 +332,7 @@ public class SpaceShooter extends Application {
     }
 
     if (score % 100 == 0 && score > 0 && !levelUpShown) {
-      showTempMessage("Level Up!", 135, HEIGHT / 2, 2);
+      showTempMessage("Level Up!", 230, HEIGHT / 2, 2);
       levelUpShown = true;
     } else if (score % 100 != 0) {
       levelUpShown = false;
@@ -396,7 +410,7 @@ public class SpaceShooter extends Application {
     primaryStage.setScene(scene);
   }
 
-  /** Reset game state when player enters the button menu. */
+  /** Reset game state when player enters the button menu/try-again. */
   private void resetGameState() {
     gameObjects.clear();
     numLives = 3;
@@ -408,8 +422,7 @@ public class SpaceShooter extends Application {
     Enemy.SPEED = 1.0;
     lifeLabel.setText("Lives: " + numLives);
     scoreLabel.setText("Score: " + score);
-    BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" +
-                            MAX_BOSES);
+    BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" + MAX_BOSES);
     reset = true;
     gameRunning = true;
     if (menuMusicPlayer != null) {
@@ -417,22 +430,10 @@ public class SpaceShooter extends Application {
     }
 
     // Reset trạng thái player về mặc định
-    player =
-        new Player(WIDTH / 2, HEIGHT - 40); // Đặt lại vị trí giữa đáy màn hình
-    player.setMoveLeft(false);
-    player.setMoveRight(false);
-    player.setMoveForward(false);
-    player.setMoveBackward(false);
-    player.setBulletLevel(1); // reset về 1 khi bắt đầu game
+    player = new Player(WIDTH / 2, HEIGHT - 40);
+    player.setBulletLevel(1);
 
     gameObjects.add(player);
-
-    // Nếu đang ở AI mode, tạo lại AIController với player mới
-    if (aiMode) {
-      aiController = new AIController(player, gameObjects, newObjects);
-    }
-
-    // Gán lại event handler cho player mới
     initEventHandlers(scene);
   }
 
@@ -612,24 +613,6 @@ public class SpaceShooter extends Application {
     playLosingSound();
   }
 
-  /** Method to play the losing sound. */
-  private void playLosingSound() {
-    try {
-      // Load the MP3 file as a Media object
-      String soundPath =
-          getClass().getResource("/sounds/gameover.mp3").toString();
-      Media sound = new Media(soundPath);
-
-      // Create a MediaPlayer object for the sound
-      MediaPlayer mediaPlayer = new MediaPlayer(sound);
-
-      // Play the sound
-      mediaPlayer.play();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   /** Method to show the winning screen and winning sound. */
   private void showWinningScreen() {
     // Stop music background if it's playing
@@ -667,6 +650,24 @@ public class SpaceShooter extends Application {
     playWinningSound();
   }
 
+  /** Method to play the losing sound. */
+  private void playLosingSound() {
+    try {
+      // Load the MP3 file as a Media object
+      String soundPath =
+              getClass().getResource("/sounds/gameover.mp3").toString();
+      Media sound = new Media(soundPath);
+
+      // Create a MediaPlayer object for the sound
+      MediaPlayer mediaPlayer = new MediaPlayer(sound);
+
+      // Play the sound
+      mediaPlayer.play();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   /** Method to creat the winning sound. */
   private void playWinningSound() {
     try {
@@ -679,6 +680,19 @@ public class SpaceShooter extends Application {
       MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
       // Play the sound
+      mediaPlayer.play();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+
+  /** Plays a sound for the power-up. */
+  private void playPowerupSound() {
+    try {
+      String path = getClass().getResource("/sounds/powerup.mp3").toString();
+      Media sound = new Media(path);
+      MediaPlayer mediaPlayer = new MediaPlayer(sound);
       mediaPlayer.play();
     } catch (Exception e) {
       e.printStackTrace();

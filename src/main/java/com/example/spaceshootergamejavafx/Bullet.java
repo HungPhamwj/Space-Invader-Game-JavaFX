@@ -19,7 +19,7 @@ public class Bullet extends GameObject {
   public static final int HEIGHT = 15;
 
   /** Speed of the bullet */
-  private static final double SPEED = 10;
+  public static final double SPEED = 10;
 
   /** Flag to indicate if the bullet is dead */
   private boolean dead = false;
@@ -32,20 +32,18 @@ public class Bullet extends GameObject {
    */
   public Bullet(double x, double y) {
     super(x, y, WIDTH, HEIGHT);
-    playSound("/sounds/enemyhit.mp3");
+    playSound("/sounds/shooting.mp3");
   }
 
-  /** Updates the bullet's position  and sounds */
+  /** Updates the bullet's position and sounds */
   @Override
   public void update() {
     y -= SPEED;
   }
 
-  // Phát âm thanh khi bắn
-
+  /** Plays a sound for the bullet */
   private void playSound(String resourcePath) {
     try {
-      // Dùng getResource để lấy đường dẫn đúng từ resources
       String path = getClass().getResource(resourcePath).toExternalForm();
       Media sound = new Media(path);
       MediaPlayer mediaPlayer = new MediaPlayer(sound);
@@ -104,4 +102,5 @@ public class Bullet extends GameObject {
   public boolean isDead() {
     return dead;
   }
+
 }

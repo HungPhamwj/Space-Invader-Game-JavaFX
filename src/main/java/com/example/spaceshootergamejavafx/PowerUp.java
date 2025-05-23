@@ -2,6 +2,8 @@ package com.example.spaceshootergamejavafx;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
 import java.util.Objects;
@@ -22,7 +24,7 @@ public class PowerUp extends GameObject {
   private boolean isDead = false;
 
   /** Image for the power-up */
-  private final Image powerUpImage; // Image for the power-up
+  private final Image powerUpImage;
 
   /**
    * Creates a new power-up at the specified position
@@ -33,8 +35,7 @@ public class PowerUp extends GameObject {
   public PowerUp(double x, double y) {
     super(x, y, WIDTH, HEIGHT);
     // Load the power-up image from resources
-    this.powerUpImage =
-        new Image(Objects.requireNonNull(getClass().getResourceAsStream("/powerup.png")));
+    this.powerUpImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/powerup.png")));
   }
 
   /** Updates the power-up's position */
@@ -94,6 +95,7 @@ public class PowerUp extends GameObject {
    */
   @Override
   public boolean isDead() {
+
     return this.isDead;
   }
 

@@ -42,7 +42,8 @@ public class Player extends GameObject {
   /** Stores the dead flag for the player */
   private boolean dead = false;
 
-  private int bulletLevel = 1; // Số tia đạn, mặc định là 1
+  /** Stores the bullet level for the player */
+  private int bulletLevel = 1;
 
   /**
    * Creates a new player at the specified position
@@ -91,8 +92,9 @@ public class Player extends GameObject {
    */
   public void setHealth(int health) { this.health = health; }
 
+  // Sets the bullet level : 1 -> 3
   public void setBulletLevel(int level) {
-    bulletLevel = Math.max(1, Math.min(3, level)); // Giới hạn từ 1 đến 3
+    bulletLevel = Math.max(1, Math.min(3, level));
   }
 
   public int getBulletLevel() { return bulletLevel; }

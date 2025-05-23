@@ -1,0 +1,121 @@
+@startuml Space Invader Game Class Diagram
+
+' Enhanced style settings for better visual appearance
+skinparam backgroundColor #F0F8FF
+skinparam titleFontSize 20
+skinparam titleFontStyle bold
+skinparam titleFontColor #333333
+
+' Class styling
+skinparam class {
+  BackgroundColor #FFECB3-#FFE082
+  ArrowColor #FF6F00
+  BorderColor #E65100
+  FontColor #BF360C
+  FontStyle bold
+  FontSize 14
+  AttributeFontColor #E65100
+  AttributeFontSize 12
+  AttributeIconSize 0
+  StereotypeFontColor #BF360C
+  StereotypeFontSize 12
+}
+
+' Package styling
+skinparam package {
+  BackgroundColor #E1F5FE
+  BorderColor #0288D1
+  FontColor #01579B
+  FontStyle bold
+  FontSize 16
+}
+
+' Layout settings for better organization
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+skinparam padding 10
+skinparam roundCorner 15
+skinparam defaultTextAlignment center
+skinparam shadowing true
+
+title <size:24><b>Space Invader Game - Class Diagram</b></size>
+
+package "com.example.spaceshootergamejavafx" {
+    ' Abstract Base Class
+    abstract class GameObject
+
+    ' Main Application Class
+    class SpaceShooter
+
+    ' Player Class
+    class Player
+
+    ' Enemy Class
+    class Enemy
+
+    ' Boss Enemy Class
+    class BossEnemy
+
+    ' Bullet Class
+    class Bullet
+
+    ' Enemy Bullet Class
+    class EnemyBullet
+
+    ' Bomb Class
+    class Bomb
+
+    ' PowerUp Class
+    class PowerUp
+
+    ' AI Controller Class
+    class AIController
+
+    ' Image Processor Class
+    class ImageProcessor
+
+    ' Layout hints
+    GameObject -[hidden]down- SpaceShooter
+    GameObject -[hidden]right- Player
+    Player -[hidden]right- Enemy
+    Enemy -[hidden]right- Bullet
+    Bullet -[hidden]right- PowerUp
+    PowerUp -[hidden]right- AIController
+    
+    ' Relationships with improved styling
+    SpaceShooter "1" o--> "*" GameObject: manages >
+    SpaceShooter "1" o--> "1" Player: controls >
+    SpaceShooter "1" o--> "0..1" AIController: uses >
+    
+    GameObject <|-- Player: extends
+    GameObject <|-- Enemy: extends
+    GameObject <|-- Bullet: extends
+    GameObject <|-- EnemyBullet: extends
+    GameObject <|-- PowerUp: extends
+    GameObject <|-- Bomb: extends
+    
+    Enemy <|-- BossEnemy: extends
+    
+    AIController "1" --> "1" Player: controls >
+    AIController "1" --> "*" GameObject: monitors >
+    
+    Player ..> Bullet: creates >
+    Enemy ..> EnemyBullet: creates >
+    BossEnemy ..> Bomb: creates >
+    BossEnemy ..> EnemyBullet: creates >
+}
+
+legend right
+  <b>Legend</b>
+  |= Symbol |= Relationship |
+  | <b>——▷</b> | Inheritance |
+  | <b>——▶</b> | Association |
+  | <b>o——▶</b> | Aggregation |
+  | <b>*——▶</b> | Composition |
+  | <b>····▶</b> | Dependency |
+endlegend
+
+footer "Space Invader Game - JavaFX Implementation"
+
+@enduml

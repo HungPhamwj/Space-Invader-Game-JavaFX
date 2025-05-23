@@ -18,14 +18,9 @@ public class BossEnemy extends Enemy {
   private static final int WIDTH = 60;
 
   /** Height of the boss enemy hitbox. */
-  private static final int HEIGHT = 30; // Hitbox height
-
+  private static final int HEIGHT = 30;
   /** Number of hits the boss can take before dying. */
   private int numHits = 5;
-
-  /** Condition to check if the game is end. */
-  private int bosesDefeated = 0;
-  private final int MAX_BOSES = 5;
 
   /** Image for the boss enemy. */
   private final Image bossImage;
@@ -44,7 +39,7 @@ public class BossEnemy extends Enemy {
    */
   public BossEnemy(double x, double y) {
     super(x, y);
-    SPEED = 1.0; // Vertical speed
+    SPEED = 1.0;
     health = 15;
 
     // Load the boss image from resources
@@ -60,9 +55,9 @@ public class BossEnemy extends Enemy {
 
     // Nếu boss chạm biên trên hoặc vượt quá nửa trên màn hình thì đổi hướng
     if (y < HEIGHT / 4) {
-      SPEED = Math.abs(SPEED); // đi xuống
+      SPEED = Math.abs(SPEED);
     } else if (y > SpaceShooter.HEIGHT / 2) {
-      SPEED = -Math.abs(SPEED); // đi lên
+      SPEED = -Math.abs(SPEED);
     }
 
     // BossEnemy also moves horizontally back and forth
@@ -74,13 +69,11 @@ public class BossEnemy extends Enemy {
     }
 
     // Thả bom ngẫu nhiên
-    if (newObjects != null && Math.random() < 0.03) {
+    if (newObjects != null && Math.random() < 0.05) {
       newObjects.add(new Bomb(x, y + HEIGHT / 2));
     }
   }
-  /**
-   *  sound boss.
-   */
+  /** Plays a sound boss. */
   private void playSound(String resourcePath) {
     try {
       // Dùng getResource để lấy đường dẫn đúng từ resources
@@ -92,9 +85,6 @@ public class BossEnemy extends Enemy {
       e.printStackTrace();
     }
   }
-  /**
-   *  Hieu ung cho boss.
-   */
 
   /** Damages the boss enemy by reducing its health. */
   public void takeDamage() {
