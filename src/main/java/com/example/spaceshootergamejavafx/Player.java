@@ -19,7 +19,7 @@ public class Player extends GameObject {
   private static final int HEIGHT = 30; // Updated to 2x the original size
 
   /** Speed of the player */
-  private static final double SPEED = 5;
+  private static final double SPEED = 7;
 
   /** Flags to indicate move left direction */
   private boolean moveLeft;

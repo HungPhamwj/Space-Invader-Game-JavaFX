@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 public class BossEnemy extends Enemy {
 
   /** Health of the boss enemy. */
-  private int health = 5;
+  private int health = 20;
 
   /** Width of the boss enemy hitbox. */
   private static final int WIDTH = 60;
@@ -26,7 +26,7 @@ public class BossEnemy extends Enemy {
   private final Image bossImage;
 
   /** Horizontal movement speed of the boss enemy. */
-  private double horizontalSpeed = 1.5;
+  private double horizontalSpeed = 3.0;
 
   /** List of new game objects to be added by the boss enemy. */
   private List<GameObject> newObjects;
@@ -40,7 +40,7 @@ public class BossEnemy extends Enemy {
   public BossEnemy(double x, double y) {
     super(x, y);
     SPEED = 1.0;
-    health = 15;
+    health = 20;
 
     // Load the boss image from resources
     this.bossImage = new Image(
@@ -69,7 +69,7 @@ public class BossEnemy extends Enemy {
     }
 
     // Thả bom ngẫu nhiên
-    if (newObjects != null && Math.random() < 0.05) {
+    if (newObjects != null && Math.random() < 0.03) {
       newObjects.add(new Bomb(x, y + HEIGHT / 2));
     }
   }

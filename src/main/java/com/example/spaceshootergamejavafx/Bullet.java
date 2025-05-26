@@ -19,7 +19,7 @@ public class Bullet extends GameObject {
   public static final int HEIGHT = 15;
 
   /** Speed of the bullet */
-  public static final double SPEED = 10;
+  public static final double SPEED = 15;
 
   /** Flag to indicate if the bullet is dead */
   private boolean dead = false;
@@ -60,7 +60,7 @@ public class Bullet extends GameObject {
    */
   @Override
   public void render(GraphicsContext gc) {
-    gc.setFill(Color.YELLOW);
+    gc.setFill(Color.LIGHTGOLDENRODYELLOW);
     gc.fillRect(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
   }
 

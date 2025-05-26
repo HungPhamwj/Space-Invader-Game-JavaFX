@@ -57,7 +57,7 @@ public class SpaceShooter extends Application {
   private boolean reset = false;
 
   /** Condition to check if the game is end. */
-  private final int MAX_BOSES = 5;
+  private final int MAX_BOSES = 10;
 
   /** Achievement variable MAX_SCORE. */
   private int highestScore = 0;
