@@ -36,10 +36,10 @@ import javafx.util.Duration;
 public class SpaceShooter extends Application {
 
   /** Width of the game window. */
-  public static final int WIDTH = 500;
+  public static final int WIDTH = 400;
 
   /** Height of the game window. */
-  public static final int HEIGHT = 900;
+  public static final int HEIGHT = 700;
 
   /** Number of lives the player starts with. */
   public static int numLives = 3;
@@ -57,7 +57,7 @@ public class SpaceShooter extends Application {
   private boolean reset = false;
 
   /** Condition to check if the game is end. */
-  private final int MAX_BOSES = 10;
+  private final int MAX_BOSES = 5;
 
   /** Achievement variable MAX_SCORE. */
   private int highestScore = 0;
@@ -292,7 +292,8 @@ public class SpaceShooter extends Application {
             score += 10;
           }
           scoreLabel.setText("Score: " + score);
-          BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" + MAX_BOSES);
+          BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" +
+                                  MAX_BOSES);
 
           if (score % 100 == 0) {
             Enemy.SPEED += 0.8;
@@ -422,7 +423,8 @@ public class SpaceShooter extends Application {
     Enemy.SPEED = 1.0;
     lifeLabel.setText("Lives: " + numLives);
     scoreLabel.setText("Score: " + score);
-    BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" + MAX_BOSES);
+    BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" +
+                            MAX_BOSES);
     reset = true;
     gameRunning = true;
     if (menuMusicPlayer != null) {
@@ -655,7 +657,7 @@ public class SpaceShooter extends Application {
     try {
       // Load the MP3 file as a Media object
       String soundPath =
-              getClass().getResource("/sounds/gameover.mp3").toString();
+          getClass().getResource("/sounds/gameover.mp3").toString();
       Media sound = new Media(soundPath);
 
       // Create a MediaPlayer object for the sound
@@ -685,7 +687,6 @@ public class SpaceShooter extends Application {
       e.printStackTrace();
     }
   }
-
 
   /** Plays a sound for the power-up. */
   private void playPowerupSound() {

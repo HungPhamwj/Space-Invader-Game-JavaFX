@@ -69,7 +69,7 @@ public class BossEnemy extends Enemy {
     }
 
     // Thả bom ngẫu nhiên
-    if (newObjects != null && Math.random() < 0.03) {
+    if (newObjects != null && Math.random() < 0.01) {
       newObjects.add(new Bomb(x, y + HEIGHT / 2));
     }
   }
