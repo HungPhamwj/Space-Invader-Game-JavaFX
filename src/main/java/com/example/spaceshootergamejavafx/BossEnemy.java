@@ -19,8 +19,6 @@ public class BossEnemy extends Enemy {
 
   /** Height of the boss enemy hitbox. */
   private static final int HEIGHT = 30;
-  /** Number of hits the boss can take before dying. */
-  private int numHits = 20;
 
   /** Image for the boss enemy. */
   private final Image bossImage;

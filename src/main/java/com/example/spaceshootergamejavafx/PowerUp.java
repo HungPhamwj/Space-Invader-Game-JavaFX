@@ -1,12 +1,10 @@
 package com.example.spaceshootergamejavafx;
 
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
-import java.util.Objects;
 
 /** Represents a power-up in the game */
 public class PowerUp extends GameObject {
@@ -35,7 +33,8 @@ public class PowerUp extends GameObject {
   public PowerUp(double x, double y) {
     super(x, y, WIDTH, HEIGHT);
     // Load the power-up image from resources
-    this.powerUpImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/powerup.png")));
+    this.powerUpImage = new Image(
+        Objects.requireNonNull(getClass().getResourceAsStream("/powerup.png")));
   }
 
   /** Updates the power-up's position */
@@ -104,7 +103,5 @@ public class PowerUp extends GameObject {
    *
    * @param isDead The dead flag to set
    */
-  public void setDead(boolean isDead) {
-    this.isDead = isDead;
-  }
+  public void setDead(boolean isDead) { this.isDead = isDead; }
 }

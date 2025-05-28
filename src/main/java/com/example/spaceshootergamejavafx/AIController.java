@@ -141,22 +141,6 @@ public class AIController {
     }
   }
 
-  /** Tìm quả bom gần player nhất */
-  private Bomb findNearestBomb() {
-    Bomb nearest = null;
-    double minDist = Double.MAX_VALUE;
-    for (GameObject obj : gameObjects) {
-      if (obj instanceof Bomb) {
-        double dist = Math.abs(obj.getY() - player.getY());
-        if (dist < minDist) {
-          minDist = dist;
-          nearest = (Bomb)obj;
-        }
-      }
-    }
-    return nearest;
-  }
-
   /** Kiểm tra bomb có đang đe dọa player không */
   private boolean isBombThreatening(Bomb bomb) {
     // Nếu bomb ở gần player theo trục Y và gần theo trục X thì coi là nguy hiểm

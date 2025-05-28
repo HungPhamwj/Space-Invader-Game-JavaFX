@@ -1,13 +1,10 @@
 package com.example.spaceshootergamejavafx;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import java.net.URL;
+import javafx.scene.paint.Color;
+
 
 /** Represents a bullet in the game */
 public class Bullet extends GameObject {
@@ -89,9 +86,7 @@ public class Bullet extends GameObject {
    *
    * @param dead The dead flag to set
    */
-  public void setDead(boolean dead) {
-    this.dead = dead;
-  }
+  public void setDead(boolean dead) { this.dead = dead; }
 
   /**
    * Returns whether the bullet is dead
@@ -102,5 +97,4 @@ public class Bullet extends GameObject {
   public boolean isDead() {
     return dead;
   }
-
 }

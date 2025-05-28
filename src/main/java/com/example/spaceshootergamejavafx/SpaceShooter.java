@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -90,9 +89,6 @@ public class SpaceShooter extends Application {
 
   /** Game scene for the game. */
   private Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
-
-  /** Flag to indicate if the level up message has been displayed. */
-  private boolean levelUpMessageDisplayed = false;
 
   /** Flag to indicate if the level up message has beenbos shown. */
   private boolean levelUpShown = false;
@@ -281,6 +277,8 @@ public class SpaceShooter extends Application {
             if (((BossEnemy)enemy).isDead()) {
               bossExists = false;
               BossesDefeated++;
+              // Thêm hiệu ứng nổ cho boss
+              newObjects.add(new Explosion(enemy.getX(), enemy.getY()));
               if (BossesDefeated >= MAX_BOSES) {
                 gameRunning = false;
                 showWinningScreen();
@@ -290,6 +288,8 @@ public class SpaceShooter extends Application {
           } else {
             enemy.setDead(true);
             score += 10;
+            // Thêm hiệu ứng nổ cho enemy thường
+            newObjects.add(new Explosion(enemy.getX(), enemy.getY()));
           }
           scoreLabel.setText("Score: " + score);
           BossDefeatLable.setText("Bosses Defeated: " + BossesDefeated + "/" +

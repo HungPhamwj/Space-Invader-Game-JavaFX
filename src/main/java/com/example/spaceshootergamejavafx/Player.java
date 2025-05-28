@@ -1,12 +1,9 @@
 package com.example.spaceshootergamejavafx;
 
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
 /** Represents the player object in the game */
