@@ -13,13 +13,13 @@ import javafx.scene.paint.Color;
 public class Player extends GameObject {
 
   /** Width of the player hitbox */
-  private static final int WIDTH = 30; // Updated to 2x the original size
+  private static final int WIDTH = 20; // Updated to 2x the original size
 
   /** Height of the player hitbox */
-  private static final int HEIGHT = 30; // Updated to 2x the original size
+  private static final int HEIGHT = 20; // Updated to 2x the original size
 
   /** Speed of the player */
-  private static final double SPEED = 7;
+  private static final double SPEED = 5.0;
 
   /** Flags to indicate move left direction */
   private boolean moveLeft;

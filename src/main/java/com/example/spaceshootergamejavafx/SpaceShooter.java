@@ -808,7 +808,7 @@ public class SpaceShooter extends Application {
     menuPane.getChildren().addAll(welcomeText, buttonsContainer);
 
     // Music background
-    URL resource = getClass().getResource("/background.mp3");
+    URL resource = getClass().getResource("/sounds/background.mp3");
     if (resource != null) {
       Media menuMusic = new Media(resource.toString());
       menuMusicPlayer = new MediaPlayer(menuMusic);

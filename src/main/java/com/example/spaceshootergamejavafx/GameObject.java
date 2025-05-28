@@ -10,6 +10,7 @@ public abstract class GameObject {
   /** X-coordinate of the game object */
   protected double x;
 
+
   /** Y-coordinate of the game object */
   protected double y;
 

@@ -20,13 +20,13 @@ public class BossEnemy extends Enemy {
   /** Height of the boss enemy hitbox. */
   private static final int HEIGHT = 30;
   /** Number of hits the boss can take before dying. */
-  private int numHits = 5;
+  private int numHits = 20;
 
   /** Image for the boss enemy. */
   private final Image bossImage;
 
   /** Horizontal movement speed of the boss enemy. */
-  private double horizontalSpeed = 3.0;
+  private double horizontalSpeed = 2.0;
 
   /** List of new game objects to be added by the boss enemy. */
   private List<GameObject> newObjects;
@@ -92,17 +92,6 @@ public class BossEnemy extends Enemy {
     health--;
     if (health <= 0) {
       setDead(true);
-    }
-  }
-
-  /**
-   * Shoots bullets at the player.
-   *
-   * @param newObjects List of GameObjects to add new objects to.
-   */
-  public void shoot(List<GameObject> newObjects) {
-    if (Math.random() < 0.015) {
-      newObjects.add(new EnemyBullet(x, y + HEIGHT / 2));
     }
   }
 

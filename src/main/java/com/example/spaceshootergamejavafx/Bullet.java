@@ -19,7 +19,7 @@ public class Bullet extends GameObject {
   public static final int HEIGHT = 15;
 
   /** Speed of the bullet */
-  public static final double SPEED = 15;
+  public static final double SPEED = 10;
 
   /** Flag to indicate if the bullet is dead */
   private boolean dead = false;

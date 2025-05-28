@@ -1,109 +1,180 @@
 @startuml Space Invader Game Class Diagram
 
-' Enhanced style settings for better visual appearance
-skinparam backgroundColor #F0F8FF
-skinparam titleFontSize 20
-skinparam titleFontStyle bold
-skinparam titleFontColor #333333
+' ==== Global Styling ====
+skinparam backgroundColor #FAFAFA
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 40
+skinparam roundCorner 10
+skinparam padding 10
 
-' Class styling
 skinparam class {
-  BackgroundColor #FFECB3-#FFE082
-  ArrowColor #FF6F00
-  BorderColor #E65100
-  FontColor #BF360C
+  BackgroundColor #FFFFFF
+  BorderColor #607D8B
+  ArrowColor #455A64
+  FontColor #263238
+  FontSize 12
+  FontStyle bold
+  AttributeFontColor #455A64
+  AttributeFontSize 10
+}
+
+skinparam package {
+  BackgroundColor #ECEFF1
+  BorderColor #90A4AE
+  FontColor #263238
   FontStyle bold
   FontSize 14
-  AttributeFontColor #E65100
-  AttributeFontSize 12
-  AttributeIconSize 0
-  StereotypeFontColor #BF360C
-  StereotypeFontSize 12
 }
 
-' Package styling
-skinparam package {
-  BackgroundColor #E1F5FE
-  BorderColor #0288D1
-  FontColor #01579B
-  FontStyle bold
-  FontSize 16
-}
+title <b><size:20>Space Invader Game - Class Diagram</size></b>
 
-' Layout settings for better organization
-skinparam linetype ortho
-skinparam nodesep 80
-skinparam ranksep 100
-skinparam padding 10
-skinparam roundCorner 15
-skinparam defaultTextAlignment center
-skinparam shadowing true
-
-title <size:24><b>Space Invader Game - Class Diagram</b></size>
-
+' ==== Main Package ====
 package "com.example.spaceshootergamejavafx" {
-    ' Abstract Base Class
-    abstract class GameObject
 
-    ' Main Application Class
-    class SpaceShooter
+  abstract class GameObject {
+      # double x, y
+      # double width, height
+      + update()
+      + render(gc)
+      + isDead()
+      + getX(), getY()
+      + getBounds()
+      + getWidth(), getHeight()
+  }
 
-    ' Player Class
-    class Player
+  class SpaceShooter {
+      + WIDTH, HEIGHT
+      + numLives
+      - score, bossExists
+      - gameObjects, newObjects
+      - player, aiController
+      + start(primaryStage)
+      + spawnEnemy()
+      + spawnBossEnemy()
+      + spawnPowerUp()
+      + updateGameState()
+  }
 
-    ' Enemy Class
-    class Enemy
+  class Player {
+      - speed
+      - moveLeft, moveRight
+      - moveForward, moveBackward
+      - health
+      - shieldActive, rapidFireActive
+      + update()
+      + render(gc)
+      + shoot(newObjects)
+      + activateShield()
+      + activateRapidFire()
+  }
 
-    ' Boss Enemy Class
-    class BossEnemy
+  class Enemy {
+      - speed, health
+      - lastShotTime
+      + update()
+      + render(gc)
+      + shoot(newObjects)
+      + takeDamage()
+      + isDead()
+  }
 
-    ' Bullet Class
-    class Bullet
+  class BossEnemy {
+      - phase, maxHealth
+      - lastBombTime
+      + update()
+      + shootPattern(newObjects)
+      + dropBomb(newObjects)
+      + takeDamage()
+  }
 
-    ' Enemy Bullet Class
-    class EnemyBullet
+  class Bullet {
+      - speed, isAlive
+      + update()
+      + render(gc)
+      + isDead()
+      + hit()
+  }
 
-    ' Bomb Class
-    class Bomb
+  class EnemyBullet {
+      - speed, isAlive
+      + update()
+      + render(gc)
+      + isDead()
+      + hit()
+  }
 
-    ' PowerUp Class
-    class PowerUp
+  class Bomb {
+      - speed, isAlive
+      - explosionRadius
+      + update()
+      + render(gc)
+      + isDead()
+      + explode(gameObjects)
+  }
 
-    ' AI Controller Class
-    class AIController
+  class PowerUp {
+      - type: PowerUpType
+      - isAlive, speed
+      + update()
+      + render(gc)
+      + isDead()
+      + getType()
+  }
 
-    ' Image Processor Class
-    class ImageProcessor
+  enum PowerUpType {
+      SHIELD
+      RAPID_FIRE
+      HEALTH
+      SCORE_BOOST
+  }
 
-    ' Layout hints
-    GameObject -[hidden]down- SpaceShooter
-    GameObject -[hidden]right- Player
-    Player -[hidden]right- Enemy
-    Enemy -[hidden]right- Bullet
-    Bullet -[hidden]right- PowerUp
-    PowerUp -[hidden]right- AIController
-    
-    ' Relationships with improved styling
-    SpaceShooter "1" o--> "*" GameObject: manages >
-    SpaceShooter "1" o--> "1" Player: controls >
-    SpaceShooter "1" o--> "0..1" AIController: uses >
-    
-    GameObject <|-- Player: extends
-    GameObject <|-- Enemy: extends
-    GameObject <|-- Bullet: extends
-    GameObject <|-- EnemyBullet: extends
-    GameObject <|-- PowerUp: extends
-    GameObject <|-- Bomb: extends
-    
-    Enemy <|-- BossEnemy: extends
-    
-    AIController "1" --> "1" Player: controls >
-    AIController "1" --> "*" GameObject: monitors >
-    
-    Player ..> Bullet: creates >
-    Enemy ..> EnemyBullet: creates >
-    BossEnemy ..> Bomb: creates >
-    BossEnemy ..> EnemyBullet: creates >
+  class AIController {
+      - player
+      - gameObjects, newObjects
+      - random, lastShotTime
+      + update()
+      - tryToShoot()
+      - findClosestEnemy()
+      - isBombThreatening(bomb)
+  }
+
+  class ImageProcessor {
+      - imageCache
+      + getInstance()
+      + getImage(path)
+      + getScaledImage(path, width, height)
+  }
+
+  ' ==== Inheritance Relationships ====
+  GameObject <|-- Player
+  GameObject <|-- Enemy
+  GameObject <|-- Bullet
+  GameObject <|-- EnemyBullet
+  GameObject <|-- PowerUp
+  GameObject <|-- Bomb
+  Enemy <|-- BossEnemy
+
+  ' ==== Compositions / Aggregations ====
+  SpaceShooter "1" *-- "*" GameObject : manages
+  SpaceShooter "1" *-- "1" Player : controls
+  SpaceShooter "1" o-- "0..1" AIController : uses
+
+  ' ==== Dependencies ====
+  AIController --> Player : controls
+  AIController --> GameObject : monitors
+
+  Player ..> Bullet : creates
+  Enemy ..> EnemyBullet : creates
+  BossEnemy ..> Bomb : creates
+  BossEnemy ..> EnemyBullet : creates
+
+  SpaceShooter ..> PowerUp : creates
+  SpaceShooter ..> Enemy : creates
+  SpaceShooter ..> BossEnemy : creates
+
+  PowerUp --> PowerUpType : has
 }
 
 legend right

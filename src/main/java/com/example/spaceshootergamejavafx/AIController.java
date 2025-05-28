@@ -105,7 +105,7 @@ public class AIController {
       }
 
       // Thỉnh thoảng di chuyển lên/xuống để né đạn
-      if (random.nextInt(100) < 5) {
+      if (random.nextInt(100) < 10) {
         if (random.nextBoolean() && player.getY() > 100) {
           player.setMoveForward(true);
         } else if (player.getY() < SpaceShooter.HEIGHT - 100) {
